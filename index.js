@@ -6,6 +6,7 @@ import { db } from "./config/db.js";
 import authRoute from "./routes/authRoute.js";
 import semesterRoute from "./routes/semesterRoute.js";
 import matakuliahRoute from "./routes/matakuliahRoute.js";
+import pertemuanroute from "./routes/pertemuanRoute.js";
 
 dotenv.config();
 
@@ -41,6 +42,7 @@ app.get("/", (req, res) => {
 app.use(authRoute);
 app.use(semesterRoute);
 app.use(matakuliahRoute);
+app.use(pertemuanroute);
 
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
