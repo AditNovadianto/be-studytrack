@@ -25,7 +25,7 @@ export const createSemester = async (req, res) => {
 
 // Read
 export const getAllSemesterByNim = async (req, res) => {
-  const { nim_mahasiswa } = req.body;
+  const { nim_mahasiswa } = req.params;
 
   try {
     const semester = await semesterModel.getAllSemesterByNim(nim_mahasiswa);
@@ -34,6 +34,19 @@ export const getAllSemesterByNim = async (req, res) => {
   } catch (error) {
     console.error("Error fetching semester:", error);
     res.status(500).json({ error: "Failed to fetch semester" });
+  }
+};
+
+export const getActiveSemester = async (req, res) => {
+  const { nim_mahasiswa } = req.params;
+
+  try {
+    const semester = await semesterModel.getActiveSemester(nim_mahasiswa);
+
+    res.status(200).json({ semester: semester });
+  } catch (error) {
+    console.error("Error fetching active semester:", error);
+    res.status(500).json({ error: "Failed to fetch active semester" });
   }
 };
 
