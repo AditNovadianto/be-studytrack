@@ -1,4 +1,9 @@
 import { db } from "../config/db.js";
+import {
+  createPertemuan,
+  deletePertemuan,
+  deletePertemuanByMatakuliah,
+} from "./pertemuanModel.js";
 
 // Create
 export async function createMatakuliah(
@@ -13,6 +18,14 @@ export async function createMatakuliah(
       "INSERT INTO matakuliah (nama_matakuliah, dosen_matakuliah, jam_mulai, jam_selesai, id_semester) VALUES (?, ?, ?, ?, ?)",
       [nama_matakuliah, dosen_matakuliah, jam_mulai, jam_selesai, id_semester],
     );
+
+    for (let index = 0; index < 14; index++) {
+      createPertemuan(
+        `Pertemuan ${index + 1}`,
+        new Date(Date.now() + index * 7 * 24 * 60 * 60 * 1000), // Setiap pertemuan seminggu sekali
+        insertRes.insertId,
+      );
+    }
 
     return { insertId: insertRes.insertId };
   } catch (error) {
@@ -54,6 +67,10 @@ export async function updateMatakuliah(
 
 // Delete
 export async function deleteMatakuliah(id_matakuliah) {
+  for (let index = 0; index < 14; index++) {
+    deletePertemuanByMatakuliah(id_matakuliah);
+  }
+
   const [result] = await db.query(
     "DELETE FROM matakuliah WHERE id_matakuliah = ?",
     [id_matakuliah],

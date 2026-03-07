@@ -55,3 +55,13 @@ export async function deletePertemuan(id_pertemuan) {
 
   return result.affectedRows;
 }
+
+// Delete all pertemuan by matakuliah
+export async function deletePertemuanByMatakuliah(id_matakuliah) {
+  const [result] = await db.query(
+    "DELETE FROM pertemuan WHERE id_matakuliah = ?",
+    [id_matakuliah],
+  );
+
+  return result.affectedRows;
+}
