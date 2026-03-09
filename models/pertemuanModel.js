@@ -22,7 +22,9 @@ export async function createPertemuan(
 // Read
 export async function getAllPertemuanByMatakuliah(id_matakuliah) {
   const [rows] = await db.query(
-    "SELECT * FROM pertemuan WHERE id_matakuliah = ?",
+    `SELECT * FROM pertemuan 
+     WHERE id_matakuliah = ?
+     ORDER BY CAST(SUBSTRING_INDEX(nama_pertemuan, ' ', -1) AS UNSIGNED) ASC`,
     [id_matakuliah],
   );
 
